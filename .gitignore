@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+.env.local
+
+# OS
+.DS_Store
+
+# Generated outputs
+runs/
+*.pdf
+
+# Streamlit cache
+.streamlit/

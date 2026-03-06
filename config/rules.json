@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "rules": [
+    {
+      "id": "R1",
+      "field": "data_protection",
+      "description": "Data protection section must be defined",
+      "weight": 3,
+      "severity": "critical"
+    },
+    {
+      "id": "R2",
+      "field": "access_control",
+      "description": "Access control section must be defined",
+      "weight": 2,
+      "severity": "critical"
+    },
+    {
+      "id": "R3",
+      "field": "retention",
+      "description": "Retention policy must be specified",
+      "weight": 1,
+      "severity": "minor"
+    },
+    {
+      "id": "R4",
+      "field": "incident_reporting",
+      "description": "Incident reporting process must be defined",
+      "weight": 2,
+      "severity": "critical"
+    }
+  ]
+}

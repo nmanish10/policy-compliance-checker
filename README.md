@@ -1,9 +1,19 @@
 # 🛡️ Policy Compliance Intelligence
 
-An AI-powered **policy compliance analysis system** that evaluates organizational policies against a predefined compliance checklist.  
+🔗 **Live Demo:**
+[https://policy-compliance-checker-cx7k7ky9z3m3tsuazvtv9v.streamlit.app/](https://policy-compliance-checker-cx7k7ky9z3m3tsuazvtv9v.streamlit.app/)
+
+An AI-powered **policy compliance analysis system** that evaluates organizational policies against a predefined compliance checklist.
+
 The system combines **LLM-based policy extraction** with a **deterministic rule-based validation engine** to identify compliance violations and generate actionable improvement suggestions.
 
-The application provides an interactive dashboard, benchmarking analytics, run replay capabilities, and exportable compliance reports.
+The application provides:
+
+* Interactive **compliance analysis dashboard**
+* **Benchmark evaluation** framework
+* **Execution observability**
+* **Replayable system runs**
+* **Exportable PDF compliance reports**
 
 ---
 
@@ -11,15 +21,27 @@ The application provides an interactive dashboard, benchmarking analytics, run r
 
 The system analyzes policy documents and determines whether they satisfy key compliance requirements.
 
-It performs the following pipeline:
+Pipeline:
 
 1. Accept a policy as input
 2. Extract structured compliance sections using an LLM
 3. Validate extracted sections using a rule-based compliance engine
 4. Detect violations and compute a compliance score
 5. Generate improvement suggestions
-6. Display results in a dashboard
+6. Display results in an interactive dashboard
 7. Export a professional compliance report
+
+---
+
+# 🌐 Live Application
+
+You can try the system directly without installation:
+
+👉 **Open the web app**
+
+[https://policy-compliance-checker-cx7k7ky9z3m3tsuazvtv9v.streamlit.app/](https://policy-compliance-checker-cx7k7ky9z3m3tsuazvtv9v.streamlit.app/)
+
+The deployed application allows users to analyze policies directly through a browser.
 
 ---
 
@@ -27,38 +49,122 @@ It performs the following pipeline:
 
 ![Architecture](architecture.png)
 
-The architecture consists of the following components:
+Main components:
 
-**Streamlit Dashboard**
-- User interface for policy analysis
-- Displays metrics, violations, and suggestions
+### Streamlit Dashboard
 
-**Compliance Agent**
-- Orchestrates the workflow
-- Manages state transitions
-- Invokes tools and LLM parsing
+Interactive user interface for:
 
-**LLM Policy Parser**
-- Extracts structured policy sections from unstructured text
+* Policy input
+* Compliance score visualization
+* Violation analysis
+* Benchmark evaluation
+* Run replay
 
-**Compliance Engine**
-- Validates extracted sections against rule definitions
-- Calculates compliance score and risk level
+---
 
-**Rules Configuration**
-- JSON-based compliance rules
-- Includes severity levels and rule weights
+### Compliance Agent
 
-**Run Logs / Observability**
-- Stores execution traces and results
-- Enables replay and system observability
+The **ComplianceAgent** orchestrates the system workflow.
 
-**Replay Runs Viewer**
-- Allows inspection of previous executions
-- Reconstructs system decisions and state transitions
+Responsibilities:
 
-**PDF Report Generator**
-- Produces exportable compliance reports
+* Manage state transitions
+* Invoke the LLM policy parser
+* Execute validation tools
+* Generate improvement suggestions
+* Log execution traces
+
+---
+
+### LLM Policy Parser
+
+Uses **Mistral LLM API** to convert unstructured policy text into structured sections:
+
+```
+data_protection
+access_control
+retention
+incident_reporting
+```
+
+Strict guardrails ensure:
+
+* No hallucinated content
+* Only verbatim extraction
+* Missing sections returned as `null`
+
+---
+
+### Compliance Engine
+
+A deterministic validation engine that:
+
+* Loads rule definitions from `config/rules.json`
+* Checks structured policy sections
+* Calculates weighted compliance scores
+* Determines policy risk level
+
+---
+
+### Rules Configuration
+
+Compliance rules are defined in:
+
+```
+config/rules.json
+```
+
+Each rule includes:
+
+* Rule ID
+* Compliance field
+* Severity level
+* Rule weight
+* Description
+
+Example:
+
+```json
+{
+ "id": "rule_data_protection",
+ "field": "data_protection",
+ "description": "Data protection section must be defined",
+ "severity": "critical",
+ "weight": 30
+}
+```
+
+---
+
+### Observability & Run Logs
+
+Each analysis run produces:
+
+* Unique **Run ID**
+* Execution timestamp
+* State machine transitions
+* LLM extraction output
+* Compliance results
+* Generated suggestions
+
+Runs are stored in:
+
+```
+runs/
+```
+
+---
+
+### PDF Report Generator
+
+The system generates a downloadable compliance report including:
+
+* Compliance score
+* Risk classification
+* Violations detected
+* Improvement suggestions
+* Rule version metadata
 
 ---
 
@@ -66,150 +172,246 @@ The architecture consists of the following components:
 
 ![State Machine](state_machine.png)
 
-The system follows an explicit state machine during execution.
+The system follows an explicit execution state machine.
 
-IDLE → POLICY_RECEIVED → PARSING_POLICY → VALIDATING → REPORT_GENERATED → COMPLETED
+```
+IDLE
+↓
+POLICY_RECEIVED
+↓
+PARSING_POLICY
+↓
+VALIDATING
+↓
+REPORT_GENERATED
+↓
+COMPLETED
+```
 
-Each state transition is logged and visible in the dashboard.
+Each transition is logged and visible in the dashboard.
 
 ---
 
 # 🚀 Features
 
 ## Policy Analysis
-- LLM-based extraction of policy sections
-- Rule-based compliance validation
-- Violation detection
-- Weighted compliance scoring
-- Risk level classification
+
+* LLM-based structured extraction
+* Deterministic rule validation
+* Weighted compliance scoring
+* Risk classification
+* Improvement suggestions
+
+---
 
 ## Dashboard
-- Compliance score visualization
-- Violation severity distribution
-- Policy improvement suggestions
-- Execution metrics
-- State transition history
+
+Interactive analytics including:
+
+* Compliance score gauge
+* Violation severity distribution
+* Execution metrics
+* State transition history
+
+---
 
 ## Benchmark Evaluation
-- Evaluation across **10 policy scenarios**
-- Comparison with naive keyword baseline
-- Critical detection rate metric
-- Structured vs baseline score analysis
+
+Evaluation across **10 benchmark scenarios**:
+
+* Fully compliant policy
+* Missing retention policy
+* Keyword-only policy
+* Empty policy
+* Partial compliance cases
+
+Metrics include:
+
+* Structured compliance score
+* Baseline keyword score
+* Violation counts
+* Critical detection rate
+
+---
 
 ## Observability
-- Run IDs for every execution
-- Execution timestamps
-- State transition logs
-- LLM output visibility
+
+Each run logs:
+
+* Run ID
+* Execution timestamps
+* State transitions
+* LLM outputs
+
+---
 
 ## Replay System
-- Browse previous runs
-- Reconstruct execution results
-- Inspect system decisions
+
+The **Replay Runs** tab allows users to:
+
+* View previous executions
+* Reconstruct results
+* Inspect agent decisions
+
+---
 
 ## Reporting
-- Exportable **PDF compliance reports**
-- Includes violations, risk level, and suggestions
+
+Export **PDF compliance reports** containing:
+
+* Compliance score
+* Risk level
+* Detected violations
+* Improvement recommendations
 
 ---
 
-# 🧠 Compliance Rules
+# 🧪 How to Use the Web Application
 
-The validation engine uses a configurable rule set defined in:
+## 1️⃣ Analyze a Policy
 
-config/rules.json
+Open the **Compliance Analysis** tab.
 
-Each rule specifies:
+Steps:
 
-- Compliance field
-- Severity level
-- Weight
-- Description
+1. Paste a policy into the text input field
+2. Click **Analyze Policy**
+3. The system will:
 
-Example rule:
+   * Extract structured policy sections
+   * Validate compliance rules
+   * Calculate compliance score
+   * Detect violations
+   * Generate improvement suggestions
 
-```json
-{
-  "id": "rule_data_protection",
-  "field": "data_protection",
-  "description": "Data protection section must be defined",
-  "severity": "critical",
-  "weight": 30
-}
+---
+
+## 2️⃣ View Compliance Results
+
+The dashboard displays:
+
+* Compliance score gauge
+* Risk level classification
+* Violation count
+* Execution time
+* Severity distribution chart
+
+You can also inspect:
+
+* LLM extracted sections
+* State machine transitions
+
+---
+
+## 3️⃣ Download Compliance Report
+
+After analysis:
+
+Click
+
+```
+Download Compliance Report (PDF)
 ```
 
+The generated report includes:
+
+* Compliance score
+* Violations detected
+* Risk classification
+* Improvement suggestions
+
 ---
 
-# 📈 Evaluation Framework
+## 4️⃣ Run Benchmark Evaluation
 
-The system includes an evaluation harness with 10 benchmark scenarios, including:
+Open the **Benchmark Analytics** tab.
 
-- Fully compliant policy
+Click:
 
-- Missing retention policy
+```
+Run Benchmark Evaluation
+```
 
-- Only keyword mentions
+The system will execute **10 evaluation scenarios** and display:
 
-- Empty policy
+* Average structured compliance score
+* Average baseline keyword score
+* Baseline overestimation cases
+* Critical detection rate
+* Scenario comparison charts
 
-- Partial compliance
+---
 
+## 5️⃣ Replay Previous Runs
 
-Metrics reported:
+Open the **Replay Runs** tab.
 
-- Structured compliance score
+Steps:
 
-- Baseline keyword score
+1. Select a run ID
+2. Click **Load Run**
 
-- Violation counts
+This displays:
 
-- Critical detection rate
+* Run metadata
+* State transition history
+* LLM output
+* Validation results
 
+---
 
-This demonstrates the effectiveness of structured validation compared to naive keyword detection.
+# 🧪 Quick Test Policy
 
+You can test the system with this example:
+
+```
+Data Protection:
+All user data is encrypted using AES-256.
+
+Access Control:
+Role-based access control is enforced.
+
+Retention:
+Data is retained for 7 years.
+
+Incident Reporting:
+Incidents must be reported within 24 hours.
+```
+
+Paste this policy into the dashboard and click **Analyze Policy**.
 
 ---
 
 # 🛠️ Tech Stack
 
-**Backend**
+### Backend
 
-- Python
+* Python
 
+### AI Integration
 
-**AI Integration**
+* Mistral LLM API
 
-- Mistral LLM API
+### Frontend
 
+* Streamlit
 
-**Frontend**
+### Visualization
 
-- Streamlit
+* Plotly
+* Matplotlib
 
+### Data Processing
 
-**Visualization**
+* Pandas
 
-- Plotly
+### PDF Reporting
 
-- Matplotlib
+* ReportLab
 
+### Schema Validation
 
-**Data Handling**
-
-- Pandas
-
-
-**PDF Reporting**
-
-- ReportLab
-
-
-**Schema Validation**
-
-- Pydantic
-
-
+* Pydantic
 
 ---
 
@@ -232,7 +434,6 @@ policy-compliance-checker/
 │   └── rules.json
 │
 ├── runs/
-│   └── run logs
 │
 ├── architecture.png
 ├── state_machine.png
@@ -243,24 +444,31 @@ policy-compliance-checker/
 
 ---
 
-# ⚙️ Installation
+# ⚙️ Local Installation
 
 Clone the repository:
+
 ```
 git clone <repository-url>
 cd policy-compliance-checker
 ```
-Create a virtual environment:
+
+Create virtual environment:
+
 ```
 python -m venv venv
 ```
-Activate the environment:
+
+Activate environment:
 
 Windows:
+
 ```
 venv\Scripts\activate
 ```
+
 Install dependencies:
+
 ```
 pip install -r requirements.txt
 ```
@@ -269,7 +477,8 @@ pip install -r requirements.txt
 
 # 🔑 Environment Variables
 
-Create a .env file:
+Create a `.env` file:
+
 ```
 MISTRAL_API_KEY=your_api_key
 MISTRAL_MODEL=mistral-large-latest
@@ -278,64 +487,37 @@ MISTRAL_API_URL=https://api.mistral.ai/v1/chat/completions
 
 ---
 
-# ▶️ Running the Application
+# ▶️ Running Locally
 
 Start the dashboard:
+
 ```
 streamlit run app.py
 ```
-
-The dashboard will open in the browser.
-
 
 ---
 
 # 🧪 Running Evaluation
 
-To run the benchmark evaluation:
+Run benchmark evaluation from CLI:
+
 ```
 python evaluation.py
 ```
-This will execute all test scenarios and display evaluation results.
-
-
----
-
-# 📄 Exporting Reports
-
-After analyzing a policy in the dashboard, you can download a PDF compliance report that includes:
-
-- Compliance score
-
-- Risk classification
-
-- Detected violations
-
-- Improvement suggestions
-
-- Rule version metadata
-
-
 
 ---
 
 # 🧩 Guardrails
 
-The system implements several safeguards:
+The system includes multiple safety mechanisms:
 
-- Tool allowlist enforcement
-
-- Maximum execution steps
-
-- API timeouts
-
-- Schema validation for LLM output
-
-- Deterministic rule validation
-
+* Tool allowlist enforcement
+* Maximum execution steps
+* API timeout handling
+* Schema validation for LLM outputs
+* Deterministic rule validation
 
 These ensure reliable and safe agent execution.
-
 
 ---
 
@@ -343,34 +525,16 @@ These ensure reliable and safe agent execution.
 
 Typical demo flow:
 
-1. Enter a policy into the dashboard
-
-
-2. Run the compliance analysis
-
-
+1. Enter a policy in the dashboard
+2. Run compliance analysis
 3. View violations and compliance score
-
-
 4. Inspect state transitions
-
-
 5. Review improvement suggestions
-
-
-6. Download the compliance report
-
-
-7. Compare results using the benchmark analytics
-
-
-
+6. Download compliance report
+7. Run benchmark analytics
 
 ---
 
 # 📜 License
 
-This project is intended for educational and research purposes.
-
----
-
+This project is intended for **educational and research purposes**.

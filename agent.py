@@ -11,6 +11,8 @@ from models import PolicySections
 
 load_dotenv()
 
+MISTRAL_API_KEY = os.environ.get("MISTRAL_API_KEY")
+
 if not MISTRAL_API_KEY:
     raise Exception("MISTRAL_API_KEY not set in environment variables")
 
@@ -18,7 +20,6 @@ if not MISTRAL_API_KEY:
 # MISTRAL CONFIG
 # =========================
 
-MISTRAL_API_KEY = os.environ.get("MISTRAL_API_KEY")
 MISTRAL_MODEL = os.environ.get("MISTRAL_MODEL", "mistral-large-latest")
 MISTRAL_API_URL = os.environ.get(
     "MISTRAL_API_URL",

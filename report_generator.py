@@ -134,7 +134,7 @@ def generate_pdf_report(data, path):
     c.drawString(50, y, f"Run ID: {data['run_id']}")
     y -= 18
 
-    c.drawString(50, y, f"Timestamp: {data['timestamp']}")
+    c.drawString(50, y, f"Report Generated: {data['timestamp']}")
     y -= 18
 
     c.drawString(50, y, f"Rule Version: {data['rule_version']}")

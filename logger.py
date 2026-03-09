@@ -2,6 +2,7 @@ import json
 import uuid
 import time
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 
@@ -20,4 +21,5 @@ def log_run(run_id, data):
 
 
 def get_timestamp():
-    return datetime.utcnow().isoformat()
+    ist_time = datetime.now(ZoneInfo("Asia/Kolkata"))
+    return ist_time.strftime("%d %b %Y, %I:%M %p IST")

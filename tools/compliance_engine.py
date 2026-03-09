@@ -1,7 +1,6 @@
 import json
 
-MIN_POLICY_WORDS = 5
-
+MIN_POLICY_WORDS = 6
 
 def load_rules():
     with open("config/rules.json", "r") as f:
@@ -20,7 +19,7 @@ def validate_structured_policy(parsed_policy: dict):
 
     for rule in rules:
 
-        value = parsed_policy.get(rule["field"], "")
+        value = parsed_policy.get(rule["field"]) or ""
 
         # Enforce meaningful policy definition
         if not value or len(value.strip().split()) < MIN_POLICY_WORDS:

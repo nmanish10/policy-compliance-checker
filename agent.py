@@ -11,6 +11,9 @@ from models import PolicySections
 
 load_dotenv()
 
+if not MISTRAL_API_KEY:
+    raise Exception("MISTRAL_API_KEY not set in environment variables")
+
 # =========================
 # MISTRAL CONFIG
 # =========================
@@ -155,15 +158,24 @@ The following policy violations were detected:
 
 {violation_text}
 
-Provide improvement suggestions for each violation.
+Your task:
+Provide EXACTLY ONE improvement suggestion for EACH violation.
 
-IMPORTANT:
-Return ONLY a valid JSON array of strings.
+Requirements:
+- Each suggestion must directly address the specific missing policy rule.
+- Each suggestion should be written as a clear, detailed paragraph.
+- The suggestion should explain what needs to be implemented and what it should include.
+- Do NOT break suggestions into multiple bullet points.
+- Do NOT generate multiple suggestions for the same violation.
+
+Output Rules:
+- Return ONLY a valid JSON array of strings.
+- The number of suggestions MUST equal the number of violations.
 
 Example:
 [
-"Define a clear data retention policy specifying retention periods.",
-"Implement role-based access control with MFA."
+"Define a comprehensive data retention policy that specifies retention periods for different categories of data, outlines secure storage practices, and includes clear procedures for archival and deletion in accordance with applicable regulatory requirements.",
+"Implement role-based access control with clearly defined permission levels, enforce strong authentication mechanisms such as multi-factor authentication, and establish regular access reviews to ensure the principle of least privilege."
 ]
 """
 

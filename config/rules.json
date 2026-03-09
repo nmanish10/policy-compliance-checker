@@ -4,28 +4,36 @@
     {
       "id": "R1",
       "field": "data_protection",
+      "category": "Security",
       "description": "Data protection section must be defined",
+      "explanation": "Policies must define how sensitive data is protected, encrypted, and handled in accordance with regulatory requirements.",
       "weight": 3,
       "severity": "critical"
     },
     {
       "id": "R2",
       "field": "access_control",
+      "category": "Security",
       "description": "Access control section must be defined",
+      "explanation": "Policies must describe role-based access mechanisms and authentication controls.",
       "weight": 2,
       "severity": "critical"
     },
     {
       "id": "R3",
       "field": "retention",
+      "category": "Governance",
       "description": "Retention policy must be specified",
+      "explanation": "Policies must define how long data is stored and when it must be deleted.",
       "weight": 1,
       "severity": "minor"
     },
     {
       "id": "R4",
       "field": "incident_reporting",
+      "category": "Risk Management",
       "description": "Incident reporting process must be defined",
+      "explanation": "Policies must define how security incidents are detected, escalated, and reported.",
       "weight": 2,
       "severity": "critical"
     }

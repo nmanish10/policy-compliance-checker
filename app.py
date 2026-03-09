@@ -21,6 +21,13 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------
+# SESSION STATE INIT
+# ---------------------------------------------------
+
+if "analysis" not in st.session_state:
+    st.session_state.analysis = None
+
+# ---------------------------------------------------
 # DARK SaaS STYLING
 # ---------------------------------------------------
 
@@ -98,22 +105,42 @@ with tab1:
 
     with colB:
         seed = st.number_input("Seed", value=42)
-        run_clicked = st.button("Analyze Policy", use_container_width=True)
 
-    # Run analysis
-    if run_clicked:
+        run_clicked = st.button(
+            "Analyze Policy",
+            use_container_width=True,
+        )
 
-        output = agent.run(policy_input, seed=seed)
-        st.session_state["analysis"] = output
+        reset_clicked = st.button(
+            "Reset Run",
+            use_container_width=True
+        )
 
-    # Display results if available
-    if "analysis" in st.session_state:
+        if reset_clicked:
+            st.session_state.analysis = None
+            st.rerun()
 
-        output = st.session_state["analysis"]
+    # ---------------------------------------------------
+    # RUN ANALYSIS
+    # ---------------------------------------------------
+
+    if run_clicked and policy_input.strip() != "":
+
+        with st.spinner("Analyzing policy..."):
+            output = agent.run(policy_input, seed=seed)
+
+        st.session_state.analysis = output
+
+    # ---------------------------------------------------
+    # DISPLAY RESULTS
+    # ---------------------------------------------------
+
+    if st.session_state.analysis is not None:
+
+        output = st.session_state.analysis
 
         if "error" in output:
             st.error(output["error"])
-            st.stop()
 
         metrics = output["metrics"]
         result = output["result"]
@@ -189,7 +216,7 @@ with tab1:
                 st.info(suggestion)
 
         # ---------------------------------------------------
-        # PDF REPORT GENERATION
+        # PDF REPORT
         # ---------------------------------------------------
 
         report_data = {
@@ -215,7 +242,7 @@ with tab1:
             )
 
         # ---------------------------------------------------
-        # DEBUG / ADVANCED DETAILS
+        # DEBUG INFO
         # ---------------------------------------------------
 
         with st.expander("🔍 LLM Extracted Sections"):
@@ -223,7 +250,6 @@ with tab1:
 
         with st.expander("🧭 State Machine Trace"):
             st.json(output["state_history"])
-
 
 # ===================================================
 # TAB 2 – BENCHMARK ANALYTICS
@@ -233,7 +259,8 @@ with tab2:
 
     if st.button("Run Benchmark Evaluation", use_container_width=True):
 
-        evaluation = run_evaluation()
+        with st.spinner("Running benchmark evaluation across policy scenarios..."):
+            evaluation = run_evaluation()
 
         results = evaluation["results"]
         critical_rate = evaluation["critical_detection_rate"]
@@ -264,7 +291,6 @@ with tab2:
         st.plotly_chart(fig, use_container_width=True)
 
         st.dataframe(df, use_container_width=True)
-
 
 # ===================================================
 # TAB 3 – REPLAY RUNS

@@ -5,100 +5,127 @@ from agent import ComplianceAgent
 # --------------------------------------------------
 
 SCENARIOS = [
-    {
-        "name": "Fully Compliant",
-        "policy": """
-        Data Protection:
-        All user data is encrypted using AES-256.
 
-        Access Control:
-        Role-based access control is enforced.
+{
+"name": "Fully Compliant",
+"policy": """
+Data Protection:
+All sensitive and personal data is encrypted using AES-256 encryption both at rest and in transit.
 
-        Retention:
-        Data is retained for 7 years.
+Access Control:
+Role-based access control is enforced and all privileged access requires multi-factor authentication.
 
-        Incident Reporting:
-        Incidents must be reported within 24 hours.
-        """,
-        "expected_critical": 0
-    },
-    {
-        "name": "Missing Retention",
-        "policy": """
-        Data Protection:
-        All user data is encrypted.
+Retention:
+Customer and operational data is retained for a period of 7 years in accordance with regulatory requirements.
 
-        Access Control:
-        Role-based access control is enforced.
+Incident Reporting:
+Security incidents must be reported to the security team within 24 hours and documented in the incident management system.
+""",
+"expected_critical": 0
+},
 
-        Incident Reporting:
-        Incidents must be reported within 24 hours.
-        """,
-        "expected_critical": 1
-    },
-    {
-        "name": "Only Mentions",
-        "policy": "We follow data protection and access control standards.",
-        "expected_critical": 4
-    },
-    {
-        "name": "Empty Policy",
-        "policy": "",
-        "expected_critical": 4
-    },
-    {
-        "name": "Only Data Protection",
-        "policy": """
-        Data Protection:
-        Data is encrypted.
-        """,
-        "expected_critical": 3
-    },
-    {
-        "name": "Only Access Control",
-        "policy": """
-        Access Control:
-        Role-based access control.
-        """,
-        "expected_critical": 3
-    },
-    {
-        "name": "Only Retention",
-        "policy": """
-        Retention:
-        Data retained for 5 years.
-        """,
-        "expected_critical": 3
-    },
-    {
-        "name": "Only Incident Reporting",
-        "policy": """
-        Incident Reporting:
-        Report within 24 hours.
-        """,
-        "expected_critical": 3
-    },
-    {
-        "name": "Partial Structured",
-        "policy": """
-        Data Protection:
-        Encrypted.
+{
+"name": "Missing Retention",
+"policy": """
+Data Protection:
+All user data is encrypted using industry standard encryption.
 
-        Retention:
-        3 years.
-        """,
-        "expected_critical": 2
-    },
-    {
-        "name": "Verbose Policy",
-        "policy": """
-        This organization ensures comprehensive data protection mechanisms
-        including encryption, strict access control policies, defined retention
-        timelines of 7 years, and mandatory incident reporting procedures
-        within 24 hours of detection.
-        """,
-        "expected_critical": 0
-    }
+Access Control:
+Role-based access control is implemented across all systems.
+
+Incident Reporting:
+All incidents must be reported within 24 hours.
+""",
+"expected_critical": 0
+},
+
+{
+"name": "Policy Mentions Only",
+"policy": "We follow data protection and access control standards across the organization.",
+"expected_critical": 3
+},
+
+{
+"name": "Empty Policy",
+"policy": "",
+"expected_critical": 4
+},
+
+{
+"name": "Only Data Protection",
+"policy": """
+Data Protection:
+All personal and sensitive data is encrypted both at rest and during transmission.
+""",
+"expected_critical": 3
+},
+
+{
+"name": "Only Access Control",
+"policy": """
+Access Control:
+Access to internal systems is controlled through role-based permissions and authentication mechanisms.
+""",
+"expected_critical": 3
+},
+
+{
+"name": "Only Retention",
+"policy": """
+Retention:
+Operational and customer data is retained for five years before secure deletion.
+""",
+"expected_critical": 3
+},
+
+{
+"name": "Only Incident Reporting",
+"policy": """
+Incident Reporting:
+Security incidents must be documented and reported to the security operations team within 24 hours.
+""",
+"expected_critical": 3
+},
+
+{
+"name": "Partial Structured",
+"policy": """
+Data Protection:
+All sensitive data is encrypted.
+
+Retention:
+Customer data is retained for 3 years.
+""",
+"expected_critical": 2
+},
+
+{
+"name": "Verbose Policy",
+"policy": """
+The organization maintains strict security and governance controls. All personal and operational data is encrypted,
+access to internal systems is restricted using role-based permissions,
+data retention is defined for a minimum of seven years,
+and all security incidents must be reported to the security team within 24 hours.
+""",
+"expected_critical": 0
+},
+
+{
+"name": "Ambiguous Policy",
+"policy": """
+Security and privacy are important to the organization.
+Appropriate measures are taken to ensure data protection.
+""",
+"expected_critical": 3
+}, 
+
+{
+"name": "Misleading Statement",
+"policy": """
+The company takes security very seriously and follows best practices to ensure data safety.
+""",
+"expected_critical": 4
+}
 ]
 
 # --------------------------------------------------

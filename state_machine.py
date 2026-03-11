@@ -1,6 +1,6 @@
 from enum import Enum
 from datetime import datetime
-
+from zoneinfo import ZoneInfo
 
 class State(Enum):
     IDLE = "IDLE"
@@ -19,7 +19,7 @@ class StateMachine:
 
     def transition(self, event: str, next_state: State):
         record = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%d %b %Y, %I:%M %p IST"),
             "from": self.current_state.value,
             "event": event,
             "to": next_state.value
